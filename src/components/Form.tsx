@@ -13,10 +13,21 @@ export default function Form() {
 
   
   const handleChange = (e: ChangeEvent<HTMLSelectElement> |ChangeEvent<HTMLInputElement> ) => {
+
+    const isNumberField = ['category', 'calories'].includes(e.target.id)
+
+    console.log(isNumberField)
+
     setActivity({
       ...activity,
-      [e.target.id]: e.target.value
+      [e.target.id]: isNumberField ? +e.target.value : e.target.value
     })
+  }
+
+  const isValidActivity = () => {
+    const { name, calories } = activity
+
+    return name.trim() !== '' && calories > 0
   }
 
   return (
@@ -71,8 +82,9 @@ export default function Form() {
 
       <input
       type="submit"
-      className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer"
-      value='Guardar Comida o Guardar Ejercicio'
+      className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer disabled:opacity-10"
+      value={activity.category === 1 ? 'Guardar Comida' : 'Guardar Ejercicio'}
+      disabled={!isValidActivity()}
       />
     </form>
   );
