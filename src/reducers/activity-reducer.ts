@@ -1,11 +1,11 @@
 import { Activity } from "../types"
+import { useReducer } from "react"
 
-export type ActivityActions = {
-
-}
+export type ActivityActions =
+{ type: 'save-activity', payload: {newActivity : Activity}}
 
 type ActivityState = {
-  activities : Activity[]
+  activities : Activity[],
 }
 
 export const initialState : ActivityState = {
@@ -16,5 +16,13 @@ export const activityReducer = (
     state : ActivityState = initialState,
     action: ActivityActions
 ) => {
-  
+  if(action.type === 'save-activity') {
+    //Este codigo maneja la logica para manejar el state
+
+    return {
+      ...state,
+      activities: [...state.activities, action.payload.newActivity]
+    }
+  }
+  return state
 }
