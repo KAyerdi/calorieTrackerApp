@@ -22,7 +22,6 @@ export default function Form({dispatch} : FormProps) {
     })
   }
 
-  console.log('ACTUALIZANDO')
 
   const isValidActivity = () => {
     const { name, calories } = activity
