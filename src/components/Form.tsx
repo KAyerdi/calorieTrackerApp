@@ -7,15 +7,17 @@ type FormProps = {
   dispatch: Dispatch<ActivityActions>
 }
 
-export default function Form({dispatch} : FormProps) {
-  
-  const [activity, setActivity] = useState<Activity>({
+const initialState = {
   category: 1,
   name: '',
   calories: 0
-})
+}
+
+export default function Form({dispatch} : FormProps) {
   
-  const handleChange = (e: ChangeEvent<HTMLSelectElement> |ChangeEvent<HTMLInputElement> ) => {
+  const [activity, setActivity] = useState<Activity>(initialState)
+  
+  const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement> ) => {
     setActivity({
       ...activity,
       [e.target.id]: e.target.value
@@ -32,12 +34,7 @@ export default function Form({dispatch} : FormProps) {
   e.preventDefault()
 
   dispatch({type: 'save-activity', payload: {newActivity: activity}})
-
-  setActivity({
-    category: 1,
-    name: '',
-    calories: 0
-  })
+  setActivity(initialState)
   }
 
   return (
