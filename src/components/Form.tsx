@@ -14,18 +14,11 @@ export default function Form({dispatch} : FormProps) {
   name: '',
   calories: 0
 })
-
-
   
   const handleChange = (e: ChangeEvent<HTMLSelectElement> |ChangeEvent<HTMLInputElement> ) => {
-
-    const isNumberField = ['category', 'calories'].includes(e.target.id)
-
-    console.log(isNumberField)
-
     setActivity({
       ...activity,
-      [e.target.id]: isNumberField ? +e.target.value : e.target.value
+      [e.target.id]: e.target.value
     })
   }
 
@@ -38,6 +31,8 @@ export default function Form({dispatch} : FormProps) {
   e.preventDefault()
 
   dispatch({type: 'save-activity', payload: {newActivity: activity}})
+
+
   }
 
   return (
