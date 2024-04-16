@@ -7,7 +7,7 @@ type CalorieTrackerProps = {
 }
 
 export default function CaloriesTracker({activities} : CalorieTrackerProps) {
-  //Contador consumidas
+  //Contador de calorias consumidas
 
   const caloriesConsumed = useMemo(
     () =>
@@ -19,7 +19,7 @@ export default function CaloriesTracker({activities} : CalorieTrackerProps) {
     [activities]
   );
 
-  //Contador ejercicio
+  //Contador de calorias ejercicio
   const caloriesBurned = useMemo(
     () =>
       activities.reduce(
@@ -29,6 +29,9 @@ export default function CaloriesTracker({activities} : CalorieTrackerProps) {
       ),
     [activities]
   );
+
+  //Contador de calorias Totales
+  const netCalories = useMemo(() => caloriesConsumed - caloriesBurned,[activities])
 
   return (
     <>
@@ -44,6 +47,10 @@ export default function CaloriesTracker({activities} : CalorieTrackerProps) {
         <CalorieDisplay
         calories={caloriesBurned}
         text='Ejercicio' />
+
+<CalorieDisplay
+        calories={netCalories}
+        text='Diferencia' />
       </div>
     </>
   );
