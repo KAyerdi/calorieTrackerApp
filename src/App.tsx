@@ -1,8 +1,8 @@
-import { useReducer, useEffect, useMemo } from "react";
-import Form from "./components/Form";
-import { activityReducer, initialState } from "./reducers/activity-reducer";
+import { useEffect, useMemo, useReducer } from "react";
 import ActivityList from "./components/ActivityList";
 import CaloriesTracker from "./components/CaloriesTracker";
+import Form from "./components/Form";
+import { activityReducer, initialState } from "./reducers/activity-reducer";
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
     localStorage.setItem('activities', JSON.stringify(state.activities))
   },[state.activities])
 
-  const canRestartApp = () => useMemo (() => state.activities.length > 0 ,[state.activities])
+  const canRestartApp = () => useMemo(() => state.activities.length, [state.activities]);
 
   return (
     <>

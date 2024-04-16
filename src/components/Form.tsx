@@ -27,12 +27,13 @@ export default function Form({dispatch, state} : FormProps) {
     }
   }, [state.activeId])
   
-  const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement> ) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+    const isNumberField = ['category', 'calories'].includes(e.target.id);
     setActivity({
       ...activity,
-      [e.target.id]: e.target.value
-    })
-  }
+      [e.target.id]: isNumberField ? +e.target.value : e.target.value,
+    });
+  };
 
 
   const isValidActivity = () => {
@@ -40,15 +41,23 @@ export default function Form({dispatch, state} : FormProps) {
     return name.trim() !== '' && calories > 0
   }
 
-  const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch({
+      type: 'save-activity',
+      payload: {
+        newActivity: {
+          ...activity,
+          calories: parseInt(activity.calories.toString()),
+        },
+      },
+    });
+    setActivity({
+      ...initialState,
+      id: uuidv4(),
+    });
+  };
 
-  dispatch({type: 'save-activity', payload: {newActivity: activity}})
-  setActivity({
-    ...initialState,
-    id: uuidv4()
-  })
-  }
 
   return (
     <form className='space-y-5 bg-white shadow p-10 rounded-lg'
